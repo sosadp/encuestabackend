@@ -11,5 +11,7 @@ public interface UserService extends UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    public UserEntity createUser(UserRegisterRequest userRegisterRequest);
+    UserEntity createUser(UserRegisterRequest userRegisterRequest);
+
+    UserEntity getUser(String username);
 }

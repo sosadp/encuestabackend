@@ -32,7 +32,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         // permite que /users se puede acceder sin autenticacion.
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/users").permitAll().anyRequest().authenticated();
 
-        http.addFilter(getAuthenticationFilter()).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilter(getAuthenticationFilter())
+                .addFilter(new AuthorizationFilter(authenticationManager()))
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
@@ -41,13 +44,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     }
 
     public AuthenticationFilter getAuthenticationFilter() throws Exception{
-
         final AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager());
-
-        authenticationFilter.setFilterProcessesUrl("/users/login");
-
+        authenticationFilter.setFilterProcessesUrl(SecurityConstants.LOGIN_URL);
         return authenticationFilter;
-
     }
 
 

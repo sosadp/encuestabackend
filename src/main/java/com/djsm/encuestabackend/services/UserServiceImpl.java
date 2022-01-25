@@ -42,8 +42,12 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, userEntity);
         userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-
         return userRepository.save(userEntity);
+    }
+
+    @Override
+    public UserEntity getUser(String username) {
+        return userRepository.findByEmail(username);
     }
 
 

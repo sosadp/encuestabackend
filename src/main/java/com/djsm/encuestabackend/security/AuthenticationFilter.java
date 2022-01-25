@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -32,10 +33,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         try {
-            UserLoginRequestModel userModel = new ObjectMapper().readValue(request.getInputStream(),UserLoginRequestModel.class);
+            UserLoginRequestModel userModel = new ObjectMapper()
+                    .readValue(request.getInputStream(),UserLoginRequestModel.class);
 
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userModel.getEmail(), userModel.getPassword(), new ArrayList<>()));
-
+            return authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(userModel.getEmail(), userModel.getPassword(), new ArrayList<>()));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -52,11 +54,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = Jwts.builder()
                 .setSubject(email)
-                .setExpiration(new Date())
-                .signWith(SignatureAlgorithm.HS512,"clavesecreta")
+                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_DATE))
+                .signWith(SignatureAlgorithm.HS512,SecurityConstants.getTokenSecret())
                 .compact();
 
-        System.out.println(token);
+        String data = new ObjectMapper().writeValueAsString(Map.of("token",SecurityConstants.TOKEN_PREFIX + token));
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().println(data);
+        response.flushBuffer();
     }
 
 

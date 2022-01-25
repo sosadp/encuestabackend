@@ -3,7 +3,7 @@ package com.djsm.encuestabackend.controllers;
 import com.djsm.encuestabackend.entities.UserEntity;
 import com.djsm.encuestabackend.models.request.UserRegisterRequest;
 import com.djsm.encuestabackend.models.responses.UserRest;
-import com.djsm.encuestabackend.services.UserServices;
+import com.djsm.encuestabackend.services.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +18,12 @@ import javax.validation.Valid;
 public class UserControllers {
 
     @Autowired
-    UserServices userServices;
+    UserService userService;
 
     @PostMapping()
     public UserRest createUser(@RequestBody @Valid UserRegisterRequest userModels){
 
-        UserEntity user = userServices.createUser(userModels);
+        UserEntity user = userService.createUser(userModels);
 
         UserRest userRest = new UserRest();
 

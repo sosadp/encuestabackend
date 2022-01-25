@@ -19,7 +19,7 @@ public class UserRegisterRequest {
 
     @NotBlank
     @Email
-    private String mail;
+    private String email;
 
     @NotBlank
     @Size(min = 8, max = 40)

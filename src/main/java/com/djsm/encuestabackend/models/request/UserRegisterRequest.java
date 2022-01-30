@@ -1,11 +1,11 @@
 package com.djsm.encuestabackend.models.request;
 
+import com.djsm.encuestabackend.annotations.UniqueEmail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -19,6 +19,7 @@ public class UserRegisterRequest {
 
     @NotBlank
     @Email
+    @UniqueEmail
     private String email;
 
     @NotBlank

@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegisterRequest {
+public class UserRegisterRequestModel {
 
     @NotBlank
     private String name;

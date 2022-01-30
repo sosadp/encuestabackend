@@ -1,7 +1,7 @@
 package com.djsm.encuestabackend.services;
 
 import com.djsm.encuestabackend.entities.UserEntity;
-import com.djsm.encuestabackend.models.request.UserRegisterRequest;
+import com.djsm.encuestabackend.models.request.UserRegisterRequestModel;
 import com.djsm.encuestabackend.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.userdetails.User;
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity createUser(UserRegisterRequest user) {
+    public UserEntity createUser(UserRegisterRequestModel user) {
 
         UserEntity userEntity = new UserEntity();
         BeanUtils.copyProperties(user, userEntity);

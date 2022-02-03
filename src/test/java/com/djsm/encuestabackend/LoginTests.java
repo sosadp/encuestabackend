@@ -32,7 +32,7 @@ public class LoginTests {
     UserRepository userRepository;
 
 
-    private static final String API_LOGIN_URL="/users/login";
+
 
 
     @BeforeEach
@@ -88,7 +88,6 @@ public class LoginTests {
 
         String token = boby.get("token");
 
-
         assertTrue(token.contains("Bearer"));
 
     }
@@ -96,13 +95,15 @@ public class LoginTests {
 
     /*simula el envio de la peticion post*/
     public <T> ResponseEntity<T> login(UserLoginRequestModel data, Class<T> responseType){
-        return testRestTemplate.postForEntity(API_LOGIN_URL,data,responseType);
+        return testRestTemplate.postForEntity(TestUtil.API_LOGIN_URL,data,responseType);
     }
 
     /*simula el envio de la peticion post con parametized*/
     public <T> ResponseEntity<T> login(UserLoginRequestModel data, ParameterizedTypeReference responseType){
         HttpEntity<UserLoginRequestModel> entity = new HttpEntity<UserLoginRequestModel>(data, new HttpHeaders());
-        return testRestTemplate.exchange(API_LOGIN_URL, HttpMethod.POST, entity,responseType);
+        return testRestTemplate.exchange(TestUtil.API_LOGIN_URL, HttpMethod.POST, entity,responseType);
     }
+
+
 
 }

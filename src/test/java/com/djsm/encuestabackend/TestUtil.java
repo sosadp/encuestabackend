@@ -6,6 +6,10 @@ import java.util.Random;
 
 public class TestUtil {
 
+    public static final String API_LOGIN_URL="/users/login";
+
+    public static final String API_URL ="/users";
+
     public static UserRegisterRequestModel createValidUser(){
         UserRegisterRequestModel user = new UserRegisterRequestModel();
         user.setEmail(generateRandomString(16)+"@gmail.com");
